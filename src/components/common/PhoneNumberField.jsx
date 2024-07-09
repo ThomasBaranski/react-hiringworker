@@ -43,7 +43,6 @@ const PhoneNumberMain = styled(Box)({
 });
 
 const PhoneNumberField = ({ title = "", phone, setPhone = () => {} }) => {
-  // const formattedPhone = phone.replace(/[-()]/g, "");
   return (
     <>
       <PhoneNumberMain>

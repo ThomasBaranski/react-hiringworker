@@ -165,6 +165,7 @@ const Customer = () => {
         "" + row?.user?.date_of_birth,
         row?.user?.profile_picture_url,
         row?.user?.state,
+        row?.user?.date_created,
       ])
     );
     console.log("body d", body);
@@ -186,6 +187,7 @@ const Customer = () => {
         "Date of Birth",
         "Profile Picture Url",
         "State",
+        "Date Created",
       ], // Example data
       ...body,
     ]);
@@ -378,6 +380,7 @@ const Customer = () => {
                 <StyledTableCell align="center">Country</StyledTableCell>
                 <StyledTableCell align="center">Status</StyledTableCell>
                 <StyledTableCell align="center"></StyledTableCell>
+                <StyledTableCell align="center">Created Date</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -537,6 +540,9 @@ const Customer = () => {
                             </Button>
                           </StyledTableCell>
                         )}
+                        <StyledTableCell align="center">
+                          {isValidEntry(row?.user?.date_created)}
+                        </StyledTableCell>
                       </StyledTableRow>
                     </>
                   );

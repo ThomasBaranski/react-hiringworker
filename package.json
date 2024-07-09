@@ -33,7 +33,7 @@
     "react-phone-number-input": "^3.2.23",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-select": "^5.8.0",
     "react-simple-image-viewer": "^1.2.2",
     "redux-persist": "^6.0.0",

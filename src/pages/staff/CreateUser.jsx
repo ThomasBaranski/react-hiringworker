@@ -1,17 +1,8 @@
 import { ErrorMessage, Formik } from "formik";
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import {
-  Box,
-  Button,
-  Grid,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Grid, Typography } from "@mui/material";
 import CustomInputField from "../../components/common/CustomInputField";
 import Checkbox from "@mui/material/Checkbox";
-import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { LoadingButton } from "@mui/lab";
 import { useCreateStaffMemberMutation } from "../../redux/services/staffManagment.service";
@@ -19,14 +10,13 @@ import * as Yup from "yup";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import {
-  useCityListQuery,
   useCountryListQuery,
   useLazyCityListQuery,
   useLazyStateListQuery,
-  useStateListQuery,
 } from "../../redux/services/countryStateCity.service";
 import styled from "@emotion/styled";
 import PhoneNumberField from "../../components/common/PhoneNumberField";
+import dayjs from "dayjs";
 
 const PhoneNumberMain = styled(Box)({
   "&.isPhoneNumberError": {
@@ -124,12 +114,6 @@ const userData = [
     label: "Kiosk Branch",
     placeholder: "Pleaser Enter kiosk branch",
   },
-  // {
-  //   name: "username",
-  //   label: "User Name:",
-  //   placeholder: "Enter User Name",
-  //   // disabled: true,
-  // },
   {
     name: "email",
     label: "Email",
@@ -192,7 +176,7 @@ const initialValues = {
   email: "",
   password: "",
   confirm_password: "",
-  date_of_birth: "",
+  date_of_birth: dayjs(Date.now()),
   first_name: "",
   last_name: "",
   // username: "",
@@ -277,7 +261,7 @@ const CreateUser = () => {
   ]);
   useEffect(() => {
     (async () => {
-      if (country != "Select country..." && country !== null) {
+      if (country !== "Select country..." && country !== null) {
         const res = await getState({
           country: country,
           // state: state,
@@ -306,8 +290,8 @@ const CreateUser = () => {
   useEffect(() => {
     (async () => {
       if (
-        country != "Select country..." &&
-        state != "Select state..." &&
+        country !== "Select country..." &&
+        state !== "Select state..." &&
         country !== null &&
         state !== null
       ) {
@@ -329,24 +313,11 @@ const CreateUser = () => {
   }, [state]);
 
   const navigate = useNavigate();
-  // const onSubmit = async (values) => {
-  //   const data = {
-  //     ...values,
-  //     email: values.email.toLowerCase(),
-  //     first_name: values.first_name.toLowerCase(),
-  //     last_name: values.last_name.toLowerCase(),
-  //   };
-  //   const res = await createStaffMember(data);
-  //   if (res?.data?.message) {
-  //     toast.success(res?.data?.message);
-  //     navigate("/staff");
-  //   } else if (res?.error) {
-  //     toast.error(res.error?.data?.invalid_params[0]?.reason);
-  //   }
-  // };
 
   const onSubmit = async (values) => {
     try {
+      console.log(values);
+
       setLoading(true);
 
       const data = {
@@ -394,11 +365,6 @@ const CreateUser = () => {
     }
   };
 
-  const [phoneNumber, setPhoneNumber] = useState("");
-
-  // const handlePhoneNumberChange = (value) => {
-  //   setPhoneNumber(value);
-  // };
   return (
     <div>
       <Typography
@@ -420,10 +386,10 @@ const CreateUser = () => {
         {(props) => {
           const { handleSubmit, values, setFieldValue } = props;
 
-          if (values.country != "Select country..." && values.country != "") {
+          if (values.country !== "Select country..." && values.country !== "") {
             setCountry(values.country);
           }
-          if (values.state != "Select state..." && values.state != "") {
+          if (values.state !== "Select state..." && values.state !== "") {
             setState(values.state);
           }
           const isPhoneNumberError = !!props.errors.phone_number;
@@ -478,13 +444,13 @@ const CreateUser = () => {
                             sublabel="city"
                             sx={{ color: "black" }}
                             options={
-                              name == "country"
+                              name === "country"
                                 ? countryData
-                                : name == "city"
+                                : name === "city"
                                 ? cityData
-                                : name == "state"
+                                : name === "state"
                                 ? stateData
-                                : name == "gender"
+                                : name === "gender"
                                 ? genderData
                                 : options
                             }
@@ -492,11 +458,6 @@ const CreateUser = () => {
                             select={select}
                           />
                         )}
-                        {/* <PhoneInput
-                          country={"us"}
-                          value={phoneNumber}
-                          onChange={handlePhoneNumberChange}
-                        /> */}
                       </Grid>
                     </>
                   )

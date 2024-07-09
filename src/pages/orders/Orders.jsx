@@ -203,6 +203,7 @@ const Orders = () => {
                   <StyledTableCell align="left">Status</StyledTableCell>
                   {/* <StyledTableCell align="left">Paid Amount</StyledTableCell> */}
                   <StyledTableCell align="left"></StyledTableCell>
+                  <StyledTableCell align="left">Created Date</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -292,6 +293,9 @@ const Orders = () => {
                                 </Typography>
                               </Box>
                             </Button>
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            {row?.date_created ? row?.date_created : "N/A"}
                           </StyledTableCell>
                         </StyledTableRow>
                       </>

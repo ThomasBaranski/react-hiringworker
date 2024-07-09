@@ -110,15 +110,18 @@ const Staff = () => {
   const AddModal = () => {
     navigate("/createuser");
   };
-  const Edithandle = () => {
+  const Edithandle = (id) => {
+    setId(id);
     setAnchorEl(null);
     navigate(`/edituser/${id}`);
   };
-  const Deletehandle = () => {
+  const Deletehandle = (id) => {
+    setId(id);
     setAnchorEl(null);
     setPrev(true);
   };
-  const ViewProfileHandle = () => {
+  const ViewProfileHandle = (id) => {
+    setId(id);
     setAnchorEl(null);
     navigate(`/viewprofile/${id}`);
   };
@@ -152,6 +155,7 @@ const Staff = () => {
         "" + row?.user?.date_of_birth,
         row?.user?.profile_picture_url,
         row?.user?.state,
+        row?.user?.date_created,
       ])
     );
     console.log("body d", body);
@@ -173,6 +177,7 @@ const Staff = () => {
         "Date of Birth",
         "Profile Picture Url",
         "State",
+        "Date Created",
       ], // Example data
       ...body,
     ]);
@@ -308,7 +313,9 @@ const Staff = () => {
                 <StyledTableCell align="left">DOB</StyledTableCell>
                 <StyledTableCell align="left">Country</StyledTableCell>
                 <StyledTableCell align="left">Kiosk Branch</StyledTableCell>
+                <StyledTableCell align="left">Status</StyledTableCell>
                 <StyledTableCell></StyledTableCell>
+                <StyledTableCell align="left">Created Date</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -357,15 +364,73 @@ const Staff = () => {
                             {row?.user?.kiosk_branch}
                           </StyledTableCell>
                           <StyledTableCell>
-                            <IconButton
-                              id="basic-button"
-                              aria-controls={open ? "basic-menu" : undefined}
-                              aria-haspopup="true"
-                              aria-expanded={open ? "true" : undefined}
-                              onClick={(e) => handleClick(e, row.id)}
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                gap: "8px",
+                              }}
                             >
-                              <MoreVertIcon />
-                            </IconButton>
+                              {canUpdateStaff && (
+                                <Button
+                                  sx={{
+                                    backgroundColor: "green",
+                                    color: "white",
+                                    textTransform: "capitalize",
+                                    "&:hover": {
+                                      backgroundColor: "green",
+                                      color: "white",
+                                    },
+                                  }}
+                                  onClick={() => Edithandle(row.id)}
+                                >
+                                  Edit
+                                </Button>
+                              )}
+                              {canDeleteStaff && (
+                                <Button
+                                  sx={{
+                                    backgroundColor: "#D11A2A",
+                                    color: "white",
+                                    textTransform: "capitalize",
+                                    "&:hover": {
+                                      backgroundColor: "#D11A2A",
+                                      color: "white",
+                                    },
+                                  }}
+                                  onClick={() => Deletehandle(row.id)}
+                                >
+                                  Delete
+                                </Button>
+                              )}
+                            </Box>
+                          </StyledTableCell>
+                          {canViewStaff && (
+                            <StyledTableCell>
+                              <Button
+                                variant="contained"
+                                onClick={() => ViewProfileHandle(row.id)}
+                              >
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <VisibilityIcon />
+                                  <Typography
+                                    sx={{ textTransform: "capitalize" }}
+                                  >
+                                    View
+                                  </Typography>
+                                </Box>
+                              </Button>
+                            </StyledTableCell>
+                          )}
+                          <StyledTableCell>
+                            {row?.user?.date_created}
                           </StyledTableCell>
                         </StyledTableRow>
                       </>

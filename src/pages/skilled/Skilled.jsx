@@ -229,6 +229,7 @@ const Skilled = () => {
         "" + row?.user?.date_of_birth,
         row?.user?.profile_picture_url,
         row?.user?.state,
+        row?.user?.date_created,
       ])
     );
     console.log("body d", body);
@@ -250,6 +251,7 @@ const Skilled = () => {
         "Date of Birth",
         "Profile Picture Url",
         "State",
+        "Created Date",
       ], // Example data
       ...body,
     ]);
@@ -412,6 +414,7 @@ const Skilled = () => {
                 <StyledTableCell>Balance</StyledTableCell>
                 <StyledTableCell align="center">Status</StyledTableCell>
                 <StyledTableCell></StyledTableCell>
+                <StyledTableCell>Created Date</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -507,6 +510,9 @@ const Skilled = () => {
                               </Button>
                             </StyledTableCell>
                           )}
+                          <StyledTableCell>
+                            {isValidEntry(item?.user?.date_created)}
+                          </StyledTableCell>
                         </StyledTableRow>
                       </>
                     );
